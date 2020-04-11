@@ -6,7 +6,7 @@ const User = require('../../models/User');
 
 Router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select('-password'); // This line is the place where error occurs
     res.json({ msg: 'Hello' });
   } catch (err) {
     console.error(err.message);

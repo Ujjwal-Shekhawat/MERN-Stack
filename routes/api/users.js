@@ -48,13 +48,15 @@ route.post(
         id: user.id,
       };
 
-      jwt.sign(payload, 
-        config.get('jwtSeceret'), 
-        { expiresIn: 360000 }, 
-        (err, token) => { 
-          if(err) throw(err); 
-          res.json({ token }) 
-        });
+      jwt.sign(
+        payload,
+        config.get('jwtSeceret'),
+        { expiresIn: 360000 },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
     } catch (err) {
       res.status(500).send('Server error');
       console.error(err.messgae);

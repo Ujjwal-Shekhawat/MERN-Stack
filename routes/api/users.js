@@ -14,7 +14,7 @@ route.post(
     check('email', 'Please enter a valid email').isEmail(),
     check('password', 'Please enter a password (min. 6 characters)').isLength({
       min: 6,
-    }),
+    })
   ],
   async (req, res) => {
     const errors = validationResult(req);

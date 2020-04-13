@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ProfileSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
+    ref: 'user', // A reference to the User database model
   },
   website: {
     type: String,
@@ -27,7 +27,7 @@ const ProfileSchema = new mongoose.Schema({
       currentPosition: {
         type: String
       },
-      pastPosion: {
+      pastPosition: {
         type: String,
       },
       lookingForJobs: {

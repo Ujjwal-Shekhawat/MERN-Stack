@@ -7,6 +7,7 @@ const User = require('../../models/User'); // Get the Users models form models f
 const config = require('config');
 
 //@Router POST api
+//Regestering the user
 route.post(
   '/',
   [
@@ -44,10 +45,12 @@ route.post(
 
       await user.save(); // Saves the user porfile
 
+      // Making a payload for jwt
       const payload = {
         id: user.id,
       };
 
+      // Singning the playload to jwt here.
       jwt.sign(
         payload,
         config.get('jwtSeceret'),

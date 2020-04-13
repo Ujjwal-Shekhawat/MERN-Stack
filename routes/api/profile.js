@@ -21,6 +21,7 @@ Route.get('/me', middelware, async (req, res) => {
   }
 });
 
+// Updating the user profile
 Route.post(
   '/',
   [
@@ -94,6 +95,40 @@ Route.post(
   }
 );
 
+// Updating the user profles elemnt experiences
+Route.put(
+  '/experiences',
+  [
+    middelware,
+    [check('currentPosition', 'Current poition is required').not().isEmpty()],
+  ],
+  async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json({ msg: 'Current position is required' });
+    }
+
+    const exp = ({ currentPosition, pastPosition, lookingForJobs } = req.body);
+
+    const newExp = {
+      currentPosition,
+      pastPosition,
+      lookingForJobs,
+    };
+
+    try {
+      const profile = await Profile.findOne({ user: req.user.id });
+      profile.experiences.unshift(newExp);
+      await profile.save();
+      res.json({ profile });
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).json({ msg: 'Server error' });
+    }
+  }
+);
+
+// Getting all the user profiles (NOTE : No verification needed)
 Route.get('/', async (req, res) => {
   try {
     const profiles = await Profile.find().populate('user', ['name']);
@@ -104,6 +139,7 @@ Route.get('/', async (req, res) => {
   }
 });
 
+// Getting the profile of the user by the user id (NOTE : No verification needed)
 Route.get('/user/:user_id', async (req, res) => {
   try {
     const profile = await Profiles.findOne({
@@ -119,6 +155,20 @@ Route.get('/user/:user_id', async (req, res) => {
     if (error.kind == 'ObjectID') {
       res.status(400), jsin({ warning: 'There is no user with this id' });
     }
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+
+// Deletes the user along with its profile from database
+Route.delete('/', middelware, async (req, res) => {
+  try {
+    await Profile.findOneAndRemove({ user: req.user.id });
+    await Users.findOneAndRemove({ _id: req.user.id });
+
+    res.json({ msg: 'User Deleted' });
+  } catch (error) {
+    console.log(error.message);
     res.status(500).json({ msg: 'Server error' });
   }
 });

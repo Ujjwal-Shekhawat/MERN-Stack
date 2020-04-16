@@ -128,6 +128,23 @@ Route.put(
   }
 );
 
+Route.delete('/experiences/:experiences_id', middelware, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    const removeindex = profile.experiences
+      .map((item) => item.id)
+      .indexOf(req.params.experiences_id);
+    profile.experiences.splice(removeindex, 1);
+    await profile.save();
+
+    res.json(profile);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 // Getting all the user profiles (NOTE : No verification needed)
 Route.get('/', async (req, res) => {
   try {
@@ -158,7 +175,6 @@ Route.get('/user/:user_id', async (req, res) => {
     res.status(500).json({ msg: 'Server error' });
   }
 });
-
 
 // Deletes the user along with its profile from database
 Route.delete('/', middelware, async (req, res) => {

@@ -1,5 +1,7 @@
 const express = require('express');
 const Route = express.Router();
+const request = require('request');
+const config = require('config');
 const { check, validationResult } = require('express-validator');
 const middelware = require('../../middelware/auth');
 const Profiles = require('../../models/Profile');
@@ -189,4 +191,29 @@ Route.delete('/', middelware, async (req, res) => {
   }
 });
 
+// Accessing github profiles here
+Route.get('/github/:username', (req, res) => {
+  try {
+    const options = {
+      uri:
+        'https://api.github.com/users/${ShreyaDhir}/repos?per_page=5&sort=created:asc&client_id=f629522f026577ab9d09&client_sceret=921635a9c2228359d54133ccc8dff6c1a9e389e0',
+      method: 'GET',
+      headers: { 'user-agent': 'node.js' },
+    };
+
+    request(options, (error, response, body) => {
+      if (error) {
+        console.log(error);
+      }
+      if (response.statusCode !== 200) {
+        res.status(404).json({ msg: 'User not found' });
+      }
+
+      res.json(JSON.parse(body));
+    });
+  } catch (error) {
+    console.error(error.messgae);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
 module.exports = Route;

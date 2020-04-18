@@ -1,4 +1,6 @@
 {
   "mongoURI": "mongodb+srv://Ujjwal:ujjwal@learning-dzeuj.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSeceret": "mysecerettoken"
+  "jwtSeceret": "mysecerettoken",
+  "githubClientID": "f629522f026577ab9d09",
+  "githubSecret": "921635a9c2228359d54133ccc8dff6c1a9e389e0"
 }

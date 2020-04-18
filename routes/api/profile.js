@@ -194,9 +194,10 @@ Route.delete('/', middelware, async (req, res) => {
 // Accessing github profiles here
 Route.get('/github/:username', (req, res) => {
   try {
+    const str = 'https://api.github.com/users/'+req.params.username+'/repos?per_page=5&sort=created:asc&client_id=f629522f026577ab9d09&client_sceret=921635a9c2228359d54133ccc8dff6c1a9e389e0'
     const options = {
       uri:
-        'https://api.github.com/users/${ShreyaDhir}/repos?per_page=5&sort=created:asc&client_id=f629522f026577ab9d09&client_sceret=921635a9c2228359d54133ccc8dff6c1a9e389e0',
+        'https://api.github.com/users/'+req.params.username+'/repos?per_page=5&sort=created:asc&client_id=f629522f026577ab9d09&client_sceret=921635a9c2228359d54133ccc8dff6c1a9e389e0',
       method: 'GET',
       headers: { 'user-agent': 'node.js' },
     };

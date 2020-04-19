@@ -24,7 +24,7 @@ router.post(
         user: user.id,
       });
 
-      const post = await newPost.save();
+      const post = await newPost.save(); // Some problems are here
       res.json(newPost.text);
     } catch (err) {
       console.error(err.message);

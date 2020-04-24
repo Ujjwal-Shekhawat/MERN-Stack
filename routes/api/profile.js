@@ -84,7 +84,7 @@ Route.post(
         return res.json(profile);
       }
 
-      profile = new Profile(profileFeilds);
+      profile = new Profile(profileFeilds); // This is not working
 
       await profile.save();
       //res.json({ profile });
@@ -194,10 +194,15 @@ Route.delete('/', middelware, async (req, res) => {
 // Accessing github profiles here
 Route.get('/github/:username', (req, res) => {
   try {
-    const str = 'https://api.github.com/users/'+req.params.username+'/repos?per_page=5&sort=created:asc&client_id=f629522f026577ab9d09&client_sceret=921635a9c2228359d54133ccc8dff6c1a9e389e0'
+    const str =
+      'https://api.github.com/users/' +
+      req.params.username +
+      '/repos?per_page=5&sort=created:asc&client_id=f629522f026577ab9d09&client_sceret=921635a9c2228359d54133ccc8dff6c1a9e389e0';
     const options = {
       uri:
-        'https://api.github.com/users/'+req.params.username+'/repos?per_page=5&sort=created:asc&client_id=f629522f026577ab9d09&client_sceret=921635a9c2228359d54133ccc8dff6c1a9e389e0',
+        'https://api.github.com/users/' +
+        req.params.username +
+        '/repos?per_page=5&sort=created:asc&client_id=f629522f026577ab9d09&client_sceret=921635a9c2228359d54133ccc8dff6c1a9e389e0',
       method: 'GET',
       headers: { 'user-agent': 'node.js' },
     };

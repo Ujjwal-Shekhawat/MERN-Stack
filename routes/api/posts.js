@@ -19,13 +19,13 @@ router.post(
 
     try {
       const newPost = new Post({
+        user: req.user.id,
         text: req.body.text,
-        name: user.name,
-        user: user.id,
+        name: 'user.name',
       });
 
-      const post = await newPost.save(); // Some problems are here
-      res.json(newPost.text);
+      await newPost.save();
+      res.json(newPost);
     } catch (err) {
       console.error(err.message);
       res.status(500).json({ msg: 'Server error' });

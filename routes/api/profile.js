@@ -84,7 +84,7 @@ Route.post(
         return res.json(profile);
       }
 
-      profile = new Profile(profileFeilds); // This is not working
+      profile = new Profile(profileFeilds); // This is not working (now working)
 
       await profile.save();
       //res.json({ profile });

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middelware/auth');
-const Post = require('../../models/Post'); //Ase galtiya dubara nahi honi chaye warna ... time kharab hojayega.
+const Post = require('../../models/Post'); //Ase galtiya dubara nahi honi chaye warna ... time kharab hojayega
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
